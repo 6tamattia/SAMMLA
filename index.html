@@ -7,6 +7,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -384,6 +392,67 @@
     }
     .ref-journal { font-style: italic; }
 
+    /* ── Tree viz ────────────────────────────────────── */
+    #tree-wrap {
+      position: relative;
+      width: 100%;
+      height: min(70vh, 640px);
+      background: #0f172a;
+      margin-top: 1.5rem;
+      cursor: grab;
+      overflow: hidden;
+    }
+    #tree-wrap:active { cursor: grabbing; }
+    #tree-canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      touch-action: none;
+    }
+    #tree-tip {
+      position: absolute;
+      pointer-events: none;
+      padding: 0.35rem 0.75rem;
+      background: rgba(15,23,42,0.95);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #e2e8f0;
+      font-size: 0.78rem;
+      line-height: 1.45;
+      border-radius: 5px;
+      display: none;
+      max-width: 260px;
+      z-index: 10;
+    }
+    .tree-legend {
+      position: absolute;
+      bottom: 0.75rem;
+      left: 0.75rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 0.75rem;
+      max-width: 520px;
+    }
+    .tl-item {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.68rem;
+      color: #94a3b8;
+      white-space: nowrap;
+    }
+    .tl-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .tree-hint {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      font-size: 0.7rem;
+      color: #475569;
+    }
+
     /* ── Responsive tweaks ──────────────────────────── */
     @media (max-width: 600px) {
       section { padding: 2.5rem 0; }
@@ -506,31 +575,20 @@
     </div>
   </section>
 
-  <!-- ── Figures ─────────────────────────────────────── -->
+  <!-- ── Outcome Tree ───────────────────────────────── -->
   <section id="figures">
-    <div class="container--wide">
-      <div class="container" style="padding:0;">
-        <h2>Figures</h2>
-        <p style="color:var(--text-muted);font-size:0.9rem;">Key results — replace placeholders with your actual figures from the poster.</p>
-      </div>
-      <div class="figures-grid">
-        <figure class="figure-item">
-          <img src="https://placehold.co/800x600/e2e8f0/94a3b8?text=Figure+1" alt="Figure 1 placeholder">
-          <figcaption class="figure-caption"><strong>Figure 1.</strong> Caption describing the first figure.</figcaption>
-        </figure>
-        <figure class="figure-item">
-          <img src="https://placehold.co/800x600/e2e8f0/94a3b8?text=Figure+2" alt="Figure 2 placeholder">
-          <figcaption class="figure-caption"><strong>Figure 2.</strong> Caption for the second figure.</figcaption>
-        </figure>
-        <figure class="figure-item">
-          <img src="https://placehold.co/800x600/e2e8f0/94a3b8?text=Figure+3" alt="Figure 3 placeholder">
-          <figcaption class="figure-caption"><strong>Figure 3.</strong> Caption for the third figure.</figcaption>
-        </figure>
-        <figure class="figure-item">
-          <img src="https://placehold.co/800x600/e2e8f0/94a3b8?text=Figure+4" alt="Figure 4 placeholder">
-          <figcaption class="figure-caption"><strong>Figure 4.</strong> Caption for the fourth figure.</figcaption>
-        </figure>
-      </div>
+    <div class="container">
+      <h2>Outcome Tree</h2>
+      <p style="color:var(--text-muted);font-size:0.9rem;">
+        EUROCAT-based hierarchical outcome tree used in the TBSS analysis (529 nodes).
+        <strong>Drag</strong> to rotate &nbsp;·&nbsp; <strong>Scroll</strong> to zoom &nbsp;·&nbsp; <strong>Hover</strong> a node to identify it.
+      </p>
+    </div>
+    <div id="tree-wrap">
+      <canvas id="tree-canvas"></canvas>
+      <div id="tree-tip"></div>
+      <div class="tree-legend" id="tree-legend"></div>
+      <div class="tree-hint">drag · scroll · hover</div>
     </div>
   </section>
 
@@ -636,5 +694,202 @@
     });
   </script>
 
+
+  <script type="module">
+  import * as THREE from 'three';
+  import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+  /* ── Load & parse tree CSV ─────────────────────────── */
+  const res  = await fetch('./assets/tree_names_full.csv');
+  const text = await res.text();
+
+  const nodeMap = new Map();
+  const getNode = name => {
+    if (!nodeMap.has(name)) nodeMap.set(name, { name, children: [], parent: null });
+    return nodeMap.get(name);
+  };
+
+  const seen = new Set();
+  text.trim().split('\n').slice(1).forEach(line => {
+    const i     = line.indexOf(',');
+    const child  = line.slice(0, i).trim();
+    const parent = line.slice(i + 1).trim();
+    if (!child || !parent || child === parent) return;
+    const key = child + '||' + parent;
+    if (seen.has(key)) return;
+    seen.add(key);
+    const c = getNode(child);
+    const p = getNode(parent);
+    if (!c.parent) { c.parent = p; p.children.push(c); }
+  });
+
+  const root = getNode('malformations');
+
+  /* Depth & subtree size */
+  (function dep(n, d) { n.depth = d; n.children.forEach(c => dep(c, d + 1)); })(root, 0);
+  (function sz(n) {
+    n.size = n.children.length
+      ? n.children.reduce((s, c) => { sz(c); return s + c.size; }, 0)
+      : 1;
+  })(root);
+
+  /* ── Colors by top-level category ─────────────────── */
+  const PALETTE = [
+    0x6366f1, 0xef4444, 0x22c55e, 0xeab308, 0xa855f7,
+    0xec4899, 0x06b6d4, 0xf97316, 0x14b8a6, 0x84cc16,
+    0xf43f5e, 0x3b82f6, 0x8b5cf6, 0xfb923c, 0x2dd4bf,
+  ];
+  root.children.forEach((n, i) => {
+    const col = PALETTE[i % PALETTE.length];
+    (function mark(node) { node.col = col; node.children.forEach(mark); })(n);
+  });
+  root.col = 0xffffff;
+
+  /* ── Radial tree layout ────────────────────────────── */
+  const R_PER_LEVEL = 145;   // radial gap between levels
+  const Y_PER_LEVEL = 95;    // vertical gap between levels
+
+  (function place(node, a0, a1, depth) {
+    if (node === root) {
+      node.x = 0; node.y = 0; node.z = 0;
+    } else {
+      const aMid = (a0 + a1) / 2;
+      const R    = depth * R_PER_LEVEL;
+      node.x = R * Math.cos(aMid);
+      node.y = -depth * Y_PER_LEVEL;
+      node.z = R * Math.sin(aMid);
+    }
+    if (!node.children.length) return;
+    let a = a0;
+    node.children.forEach(child => {
+      const na = a + (child.size / node.size) * (a1 - a0);
+      place(child, a, na, depth + 1);
+      a = na;
+    });
+  })(root, 0, 2 * Math.PI, 0);
+
+  /* ── Three.js scene ────────────────────────────────── */
+  const wrap   = document.getElementById('tree-wrap');
+  const canvas = document.getElementById('tree-canvas');
+  const tip    = document.getElementById('tree-tip');
+  let W = wrap.clientWidth, H = wrap.clientHeight;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.setSize(W, H);
+
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x0f172a);
+  scene.fog = new THREE.FogExp2(0x0f172a, 0.00045);
+
+  const camera = new THREE.PerspectiveCamera(55, W / H, 1, 8000);
+  camera.position.set(0, 150, 1000);
+
+  const controls = new OrbitControls(camera, renderer.domElement);
+  controls.target.set(0, -180, 0);
+  controls.enableDamping    = true;
+  controls.dampingFactor    = 0.07;
+  controls.minDistance      = 80;
+  controls.maxDistance      = 3500;
+  controls.autoRotate       = true;
+  controls.autoRotateSpeed  = 0.35;
+  controls.addEventListener('start', () => { controls.autoRotate = false; });
+  controls.update();
+  camera.lookAt(0, -180, 0);
+
+  /* Lighting */
+  scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+  const pl1 = new THREE.PointLight(0xffffff, 1.0, 4000);
+  pl1.position.set(400, 600, 400);
+  scene.add(pl1);
+  const pl2 = new THREE.PointLight(0x6080ff, 0.4, 3000);
+  pl2.position.set(-400, -400, -200);
+  scene.add(pl2);
+
+  /* Nodes */
+  const allNodes   = Array.from(nodeMap.values()).filter(n => n.x !== undefined);
+  const pickable   = [];
+
+  allNodes.forEach(node => {
+    const r   = node.depth === 0 ? 15 : node.depth === 1 ? 9 : node.depth === 2 ? 6 : 4;
+    const col = node.col ?? 0x64748b;
+    const mat = new THREE.MeshPhongMaterial({
+      color: col, emissive: col, emissiveIntensity: 0.18, shininess: 80,
+    });
+    const mesh = new THREE.Mesh(new THREE.SphereGeometry(r, 10, 8), mat);
+    mesh.position.set(node.x, node.y, node.z);
+    mesh.userData.label = node.name;
+    mesh.userData.mat   = mat;
+    scene.add(mesh);
+    pickable.push(mesh);
+  });
+
+  /* Edges */
+  const verts = [];
+  allNodes.forEach(n => {
+    if (n.parent && n.parent.x !== undefined)
+      verts.push(n.x, n.y, n.z, n.parent.x, n.parent.y, n.parent.z);
+  });
+  const edgeGeo = new THREE.BufferGeometry();
+  edgeGeo.setAttribute('position', new THREE.Float32BufferAttribute(verts, 3));
+  scene.add(new THREE.LineSegments(edgeGeo, new THREE.LineBasicMaterial({
+    color: 0x1e3a5f, opacity: 0.55, transparent: true,
+  })));
+
+  /* ── Interaction ───────────────────────────────────── */
+  const rc    = new THREE.Raycaster();
+  const mouse = new THREE.Vector2(-9999, -9999);
+  let hovered = null;
+
+  wrap.addEventListener('mousemove', e => {
+    const rect = wrap.getBoundingClientRect();
+    mouse.x =  (e.clientX - rect.left) / rect.width  * 2 - 1;
+    mouse.y = -((e.clientY - rect.top)  / rect.height * 2 - 1);
+
+    rc.setFromCamera(mouse, camera);
+    const hits = rc.intersectObjects(pickable);
+
+    if (hovered) { hovered.userData.mat.emissiveIntensity = 0.18; hovered = null; }
+    if (hits.length) {
+      hovered = hits[0].object;
+      hovered.userData.mat.emissiveIntensity = 0.7;
+      tip.textContent  = hovered.userData.label;
+      tip.style.display = 'block';
+      tip.style.left   = (e.clientX - rect.left + 14) + 'px';
+      tip.style.top    = (e.clientY - rect.top  - 14) + 'px';
+    } else {
+      tip.style.display = 'none';
+    }
+  });
+  wrap.addEventListener('mouseleave', () => {
+    if (hovered) { hovered.userData.mat.emissiveIntensity = 0.18; hovered = null; }
+    tip.style.display = 'none';
+  });
+
+  /* ── Legend ────────────────────────────────────────── */
+  const legendEl = document.getElementById('tree-legend');
+  root.children.forEach((n, i) => {
+    const hex = PALETTE[i % PALETTE.length].toString(16).padStart(6, '0');
+    const div = document.createElement('div');
+    div.className = 'tl-item';
+    div.innerHTML = `<div class="tl-dot" style="background:#${hex}"></div><span>${n.name}</span>`;
+    legendEl.appendChild(div);
+  });
+
+  /* ── Resize ────────────────────────────────────────── */
+  new ResizeObserver(() => {
+    W = wrap.clientWidth; H = wrap.clientHeight;
+    renderer.setSize(W, H);
+    camera.aspect = W / H;
+    camera.updateProjectionMatrix();
+  }).observe(wrap);
+
+  /* ── Render loop ───────────────────────────────────── */
+  (function animate() {
+    requestAnimationFrame(animate);
+    controls.update();
+    renderer.render(scene, camera);
+  })();
+  </script>
 </body>
 </html>
