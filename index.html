@@ -59,6 +59,7 @@
       font-size: clamp(1.6rem, 4.5vw, 2.4rem);
       font-weight: 600;
       line-height: 1.25;
+
       letter-spacing: -0.02em;
       color: var(--text);
     }
@@ -123,8 +124,7 @@
     .authors {
       font-size: 1rem;
       color: var(--text-muted);
-      margin-bottom: 0.5rem;
-      line-height: 1.8;
+      margin-bottom: 0.3rem;
     }
     .authors a {
       color: var(--text);
@@ -133,16 +133,14 @@
       transition: border-color 0.15s;
     }
     .authors a:hover { border-color: var(--accent); text-decoration: none; }
-    .affiliations {
-      font-size: 0.85rem;
+    .affiliation {
+      font-size: 0.875rem;
       color: var(--text-muted);
       margin-bottom: 1.5rem;
-      line-height: 1.7;
     }
-    .affiliations p { margin-bottom: 0.15rem; }
     .tagline {
       font-family: 'Source Serif 4', Georgia, serif;
-      font-size: 1.05rem;
+      font-size: 1.125rem;
       font-style: italic;
       color: #374151;
       margin-bottom: 2rem;
@@ -190,16 +188,10 @@
     .btn-ghost:hover { background: #f3f4f6; }
 
     /* ── Abstract ───────────────────────────────────── */
-    #abstract .abstract-body {
-      font-size: 1rem;
-      line-height: 1.8;
+    #abstract p {
+      font-size: 1.025rem;
+      line-height: 1.75;
       color: #374151;
-    }
-    .abstract-section { margin-bottom: 1.1rem; }
-    .abstract-section:last-child { margin-bottom: 0; }
-    .abstract-label {
-      font-weight: 600;
-      color: var(--text);
     }
 
     /* ── Paper ──────────────────────────────────────── */
@@ -227,10 +219,9 @@
     }
     .paper-meta { flex: 1; }
     .paper-meta h3 {
-      font-size: 0.975rem;
+      font-size: 1rem;
       font-weight: 600;
       margin-bottom: 0.25rem;
-      line-height: 1.4;
     }
     .paper-meta p {
       font-size: 0.875rem;
@@ -354,57 +345,13 @@
       color: var(--text-muted);
     }
 
-    /* ── References ─────────────────────────────────── */
-    .references-list {
-      list-style: none;
-      padding: 0;
-      counter-reset: ref-counter;
-      display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-    }
-    .references-list li {
-      counter-increment: ref-counter;
-      display: grid;
-      grid-template-columns: 1.75rem 1fr;
-      gap: 0.25rem;
-      font-size: 0.875rem;
-      line-height: 1.65;
-      color: #374151;
-    }
-    .references-list li::before {
-      content: counter(ref-counter) ".";
-      font-weight: 600;
-      color: var(--text-muted);
-      padding-top: 0.05em;
-    }
-    .references-list a {
-      color: var(--accent);
-      word-break: break-all;
-    }
-    .ref-journal { font-style: italic; }
-
-    /* ── Tree widget ─────────────────────────────────── */
-    .tree-frame-wrap {
-      width: 100%;
-      margin-top: 1.5rem;
-      border-radius: 8px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-    }
-    .tree-frame-wrap iframe {
-      display: block;
-      width: 100%;
-      height: min(72vh, 660px);
-      border: none;
-    }
-
     /* ── Responsive tweaks ──────────────────────────── */
     @media (max-width: 600px) {
       section { padding: 2.5rem 0; }
       #hero { padding: 2.5rem 0 2rem; }
       .figures-grid { grid-template-columns: 1fr; }
       .paper-card { flex-direction: column; }
+      .topbar nav { gap: 1rem; overflow-x: auto; white-space: nowrap; }
     }
   </style>
 </head>
@@ -418,7 +365,6 @@
       <a href="#code">Code</a>
       <a href="#figures">Figures</a>
       <a href="#citation">Cite</a>
-      <a href="#references">References</a>
       <a href="#contact">Contact</a>
     </nav>
   </div>
@@ -426,29 +372,31 @@
   <!-- ── Hero ───────────────────────────────────────── -->
   <section id="hero">
     <div class="container">
-      <span class="venue-tag">NordicEpi &amp; NorPEN Conference · 2026</span>
-      <h1 class="hero-title">Statistical power of Tree-Based Scan Statistics (TBSS) for the surveillance of pregnancy drug safety in Swedish health registers</h1>
+      <span class="venue-tag">Conference / Journal Name · 2025</span>
+      <h1 class="hero-title">SAMMLA: A Title That Describes Your Method</h1>
       <p class="authors">
-        <a href="#">Tsampá, S.</a><sup>1</sup>,&nbsp;
-        <a href="#">Eriksson, J.</a><sup>1</sup>,&nbsp;
-        <a href="#">Netterström-Wedin, F.</a><sup>1</sup>,&nbsp;
-        <a href="#">Hägg, D.</a><sup>1</sup>,&nbsp;
-        <a href="#">Axfors, C.</a><sup>1,2,3</sup>
+        <a href="#">Author One</a><sup>1</sup>,
+        <a href="#">Author Two</a><sup>1</sup>,
+        <a href="#">Author Three</a><sup>2</sup>,
+        <a href="#">Senior Author</a><sup>1</sup>
       </p>
-      <div class="affiliations">
-        <p><sup>1</sup> Centre for Pharmacoepidemiology, Department of Medicine Solna, Karolinska Institutet, Sweden</p>
-        <p><sup>2</sup> Department of Women's and Children's Health, Uppsala University, Sweden</p>
-        <p><sup>3</sup> Meta-Research Innovation Center at Stanford (METRICS), Stanford University, Stanford, CA</p>
-      </div>
-      <p class="tagline">Supporting information for the poster presented at NordicEpi &amp; NorPEN Conference 2026</p>
+      <p class="affiliation">
+        <sup>1</sup> Your University &nbsp;·&nbsp; <sup>2</sup> Collaborating Institution
+      </p>
+      <p class="tagline">
+        One sentence that captures the essence of the contribution.
+      </p>
       <div class="hero-buttons">
         <a href="papers/paper.pdf" class="btn btn-primary">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          Poster PDF
+          Paper
         </a>
         <a href="https://github.com/6tamattia/SAMMLA/tree/main/code" class="btn btn-outline">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.03c-3.34.73-4.03-1.61-4.03-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
           Code
+        </a>
+        <a href="https://arxiv.org/abs/XXXX.XXXXX" class="btn btn-ghost">
+          arXiv
         </a>
       </div>
     </div>
@@ -458,42 +406,32 @@
   <section id="abstract">
     <div class="container">
       <h2>Abstract</h2>
-      <div class="abstract-body">
-        <div class="abstract-section">
-          <p><span class="abstract-label">Introduction — </span>With more than two-thirds of pregnant women using prescription drugs, it is a critical concern that drug safety evidence during pregnancy is systematically missing. To bridge this gap, tree-based scan statistics (TBSS) can be used to detect signals across many adverse outcomes in health register data. However, for rare outcomes, TBSS may be underpowered to identify safety alerts, except for those with large effect sizes. Statistical power, which depends on multiple factors, has not been investigated in the context of Nordic register-based data.</p>
-        </div>
-        <div class="abstract-section">
-          <p><span class="abstract-label">Aim — </span>To investigate the statistical power of TBSS to identify alerts related to important infant and maternal adverse events after drug exposure during the first trimester of pregnancy, across various analytical scenarios.</p>
-        </div>
-        <div class="abstract-section">
-          <p><span class="abstract-label">Methods — </span>The outcome tree for this study will include major congenital malformations (according to the EUROCAT classification 1.5), as well as other predefined important infant and maternal adverse outcomes (e.g., preterm birth, preeclampsia). A nationwide cohort drawn from Swedish national register-based data (2006–2022) will be used to calculate outcome prevalences. Statistical power will be defined as the ability to correctly reject a false null hypothesis (of no difference in expected and observed outcome event counts, in simulated data with injected effects). Outcome-specific statistical power for outcomes with varying frequencies will be calculated by combining different model specifications (Poisson- or Bernoulli-based maximum likelihood estimator), outcome tree versions, exposed sample sizes, effect sizes, and alert thresholds. The TBSS R package by Russo and Wang will be used.</p>
-        </div>
-        <div class="abstract-section">
-          <p><span class="abstract-label">Results — </span>Analysis is ongoing. We will present the statistical power of TBSS for the specified factor-level combinations and identify analytical combinations with acceptable power (≥80%).</p>
-        </div>
-        <div class="abstract-section">
-          <p><span class="abstract-label">Conclusion — </span>This study will guide investigators conducting perinatal signal detection studies using TBSS in Nordic registers towards designs with acceptable statistical power for the investigated outcomes, which is crucial to study interpretation and reproducibility.</p>
-        </div>
-      </div>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+      </p>
+      <p>
+        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+      </p>
     </div>
   </section>
 
   <!-- ── Paper ──────────────────────────────────────── -->
   <section id="paper">
     <div class="container">
-      <h2>Poster</h2>
+      <h2>Paper</h2>
       <div class="paper-card">
         <div class="paper-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
         </div>
         <div class="paper-meta">
-          <h3>Statistical power of Tree-Based Scan Statistics (TBSS) for the surveillance of pregnancy drug safety in Swedish health registers</h3>
-          <p>Tsampá S., Eriksson J., Netterström-Wedin F., Hägg D., Axfors C. · NordicEpi &amp; NorPEN Conference 2026</p>
+          <h3>SAMMLA: A Title That Describes Your Method</h3>
+          <p>Author One, Author Two, Author Three, Senior Author · Conference Name 2025</p>
           <div style="display:flex;gap:0.6rem;flex-wrap:wrap;">
             <a href="papers/paper.pdf" class="btn btn-primary" style="font-size:0.85rem;padding:0.4rem 0.9rem;">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
               Download PDF
             </a>
+            <a href="https://arxiv.org/abs/XXXX.XXXXX" class="btn btn-ghost" style="font-size:0.85rem;padding:0.4rem 0.9rem;">arXiv preprint</a>
           </div>
         </div>
       </div>
@@ -504,7 +442,7 @@
   <section id="code">
     <div class="container">
       <h2>Code</h2>
-      <p>Analysis code and simulation scripts are available on GitHub.</p>
+      <p>The full implementation is available on GitHub. We provide training scripts, pre-trained weights, and evaluation code.</p>
       <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-bottom:1.25rem;">
         <a href="https://github.com/6tamattia/SAMMLA/tree/main/code" class="btn btn-outline">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.03c-3.34.73-4.03-1.61-4.03-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
@@ -523,19 +461,29 @@
 
   <!-- ── Outcome Tree ───────────────────────────────── -->
   <section id="figures">
-    <div class="container">
-      <h2>Outcome Tree</h2>
-      <p style="color:var(--text-muted);font-size:0.9rem;">
-        EUROCAT-based hierarchical outcome tree used in the TBSS analysis (529 nodes).
-        <strong>Drag</strong> to rotate &nbsp;·&nbsp; <strong>Scroll</strong> to zoom &nbsp;·&nbsp; <strong>Hover</strong> a node to identify it.
-      </p>
-    </div>
-    <div class="tree-frame-wrap">
-      <iframe
-        src="assets/tree_widget.html"
-        title="Interactive EUROCAT outcome tree"
-        loading="lazy"
-      ></iframe>
+    <div class="container--wide">
+      <div class="container" style="padding:0;">
+        <h2>Figures</h2>
+        <p style="color:var(--text-muted);font-size:0.9rem;">Representative results — replace with your actual figures.</p>
+      </div>
+      <div class="figures-grid">
+        <figure class="figure-item">
+          <img src="https://placehold.co/800x600/e2e8f0/94a3b8?text=Figure+1" alt="Figure 1 placeholder">
+          <figcaption class="figure-caption"><strong>Figure 1.</strong> Caption describing the first figure. Explain what the reader should observe and why it matters.</figcaption>
+        </figure>
+        <figure class="figure-item">
+          <img src="https://placehold.co/800x600/e2e8f0/94a3b8?text=Figure+2" alt="Figure 2 placeholder">
+          <figcaption class="figure-caption"><strong>Figure 2.</strong> Caption for the second figure. Highlight the key takeaway from this visualization.</figcaption>
+        </figure>
+        <figure class="figure-item">
+          <img src="https://placehold.co/800x600/e2e8f0/94a3b8?text=Figure+3" alt="Figure 3 placeholder">
+          <figcaption class="figure-caption"><strong>Figure 3.</strong> Caption for the third figure. Describe the experimental setup or result being shown.</figcaption>
+        </figure>
+        <figure class="figure-item">
+          <img src="https://placehold.co/800x600/e2e8f0/94a3b8?text=Figure+4" alt="Figure 4 placeholder">
+          <figcaption class="figure-caption"><strong>Figure 4.</strong> Caption for the fourth figure. Summarize the conclusion a reader should draw.</figcaption>
+        </figure>
+      </div>
     </div>
   </section>
 
@@ -543,59 +491,23 @@
   <section id="citation">
     <div class="container">
       <h2>Citation</h2>
-      <p>If you reference this work, please cite:</p>
+      <p>If you use this work, please cite:</p>
       <div class="citation-block">
-        <button class="copy-btn" data-copy="@misc{tsampa2026tbss,
-  title        = {Statistical power of Tree-Based Scan Statistics ({TBSS}) for the
-                  surveillance of pregnancy drug safety in {S}wedish health registers},
-  author       = {Tsamp{\'a}, S. and Eriksson, J. and Netterstr{\"o}m-Wedin, F.
-                  and H{\"a}gg, D. and Axfors, C.},
-  year         = {2026},
-  howpublished = {Poster presented at NordicEpi \& NorPEN Conference 2026}
+        <button class="copy-btn" id="cite-copy-btn" data-copy="@inproceedings{sammla2025,
+  title     = {SAMMLA: A Title That Describes Your Method},
+  author    = {One, Author and Two, Author and Three, Author and Author, Senior},
+  booktitle = {Proceedings of the Conference Name (CONF)},
+  year      = {2025},
+  url       = {https://arxiv.org/abs/XXXX.XXXXX}
 }">Copy BibTeX</button>
-        <pre>@misc{tsampa2026tbss,
-  title        = {Statistical power of Tree-Based Scan Statistics ({TBSS}) for the
-                  surveillance of pregnancy drug safety in {S}wedish health registers},
-  author       = {Tsamp{\'a}, S. and Eriksson, J. and Netterstr{\"o}m-Wedin, F.
-                  and H{\"a}gg, D. and Axfors, C.},
-  year         = {2026},
-  howpublished = {Poster presented at NordicEpi \& NorPEN Conference 2026}
+        <pre id="bibtex">@inproceedings{sammla2025,
+  title     = {SAMMLA: A Title That Describes Your Method},
+  author    = {One, Author and Two, Author and Three, Author and Author, Senior},
+  booktitle = {Proceedings of the Conference Name (CONF)},
+  year      = {2025},
+  url       = {https://arxiv.org/abs/XXXX.XXXXX}
 }</pre>
       </div>
-    </div>
-  </section>
-
-  <!-- ── References ────────────────────────────────────── -->
-  <section id="references">
-    <div class="container">
-      <h2>References</h2>
-      <ol class="references-list">
-        <li><div>Bergman JEH, Perraud A, Barišić I, Kinsner-Ovaskainen A, Morris JK, Tucker D, et al. Updated EUROCAT guidelines for classification of cases with congenital anomalies. <span class="ref-journal">Birth Defects Res.</span> 2024;116(2):e2314. <a href="https://doi.org/10.1002/bdr2.2314" target="_blank" rel="noopener">doi:10.1002/bdr2.2314</a></div></li>
-        <li><div>Byrne JJ, Saucedo AM, Spong CY. Task force on research specific to pregnant and lactating women. <span class="ref-journal">Semin Perinatol.</span> 2020;44(3):151226. <a href="https://doi.org/10.1016/j.semperi.2020.151226" target="_blank" rel="noopener">doi:10.1016/j.semperi.2020.151226</a></div></li>
-        <li><div>Thurin NH, Pajouheshnia R, Roberto G, et al. From Inception to ConcePTION: genesis of a network to support better monitoring and communication of medication safety during pregnancy and breastfeeding. <span class="ref-journal">Clin Pharmacol Ther.</span> 2022;111(1):321–331. <a href="https://doi.org/10.1002/cpt.2476" target="_blank" rel="noopener">doi:10.1002/cpt.2476</a></div></li>
-        <li><div>US Food and Drug Administration. Postapproval Pregnancy Safety Studies: Guidance for Industry. FDA; [n.d.]. <a href="https://www.fda.gov/regulatory-information/search-fda-guidance-documents/postapproval-pregnancy-safety-studies-guidance-industry" target="_blank" rel="noopener">fda.gov</a></div></li>
-        <li><div>Gelperin K, Hammad H, Leishear K, Bird ST, Taylor L, Hampp C, et al. A systematic review of pregnancy exposure registries: examination of protocol-specified pregnancy outcomes, target sample size, and comparator selection. <span class="ref-journal">Pharmacoepidemiol Drug Saf.</span> 2017;26(2):208–214. <a href="https://doi.org/10.1002/pds.4150" target="_blank" rel="noopener">doi:10.1002/pds.4150</a></div></li>
-        <li><div>Bird ST, Gelperin K, Taylor L, Sahin L, Hammad H, Andrade SE, et al. Enrollment and retention in 34 United States pregnancy registries contrasted with the manufacturer's capture of spontaneous reports for exposed pregnancies. <span class="ref-journal">Drug Saf.</span> 2018;41(1):87–94.</div></li>
-        <li><div>Systematic overview of data sources for drug safety in pregnancy research. [Report; author and publisher details pending]</div></li>
-        <li><div>Kulldorff M, Dashevsky I, Avery TR, Chan AK, Davis RL, Graham D, et al. Drug safety data mining with a tree-based scan statistic. <span class="ref-journal">Pharmacoepidemiol Drug Saf.</span> 2013;22(5):517–523. <a href="https://doi.org/10.1002/pds.3423" target="_blank" rel="noopener">doi:10.1002/pds.3423</a></div></li>
-        <li><div>Kulldorff M, Fang Z, Walsh SJ. A tree-based scan statistic for database disease surveillance. <span class="ref-journal">Biometrics.</span> 2003;59(2):323–331. <a href="https://doi.org/10.1111/1541-0420.00039" target="_blank" rel="noopener">doi:10.1111/1541-0420.00039</a></div></li>
-        <li><div>Huybrechts KF, Kulldorff M, Hernández-Díaz S, Bateman BT, Zhu Y, Mogun H, et al. Active surveillance of the safety of medications used during pregnancy. <span class="ref-journal">Am J Epidemiol.</span> 2021;190(6):1159–1168. <a href="https://doi.org/10.1093/aje/kwaa288" target="_blank" rel="noopener">doi:10.1093/aje/kwaa288</a></div></li>
-        <li><div>Suarez EA, Nguyen M, Zhang D, Zhao Y, Stojanovic D, Munoz M, et al. Monitoring drug safety in pregnancy with scan statistics: a comparison of two study designs. <span class="ref-journal">Epidemiology.</span> 2023;34(1):90–98. <a href="https://doi.org/10.1097/EDE.0000000000001561" target="_blank" rel="noopener">doi:10.1097/EDE.0000000000001561</a></div></li>
-        <li><div>Suarez EA, Nguyen M, Zhang D, Zhao Y, Stojanovic D, Munoz M, et al. Novel methods for pregnancy drug safety surveillance in the FDA Sentinel System. <span class="ref-journal">Pharmacoepidemiol Drug Saf.</span> 2023;32(2):126–136. <a href="https://doi.org/10.1002/pds.5512" target="_blank" rel="noopener">doi:10.1002/pds.5512</a></div></li>
-        <li><div>Thai TN, Winterstein AG, Suarez EA, He J, Zhao Y, Zhang D, et al. Triple challenges—small sample size in both exposure and control groups to scan rare maternal outcomes in a signal identification approach: a simulation study. <span class="ref-journal">Am J Epidemiol.</span> 2024;193(12):1805–1813.</div></li>
-        <li><div>Maro JC, Nguyen MD, Dashevsky I, Baker MA, Kulldorff M. Statistical power for postlicensure medical product safety data mining. <span class="ref-journal">EGEMS.</span> 2017;5(1):6. <a href="https://doi.org/10.5334/egems.225" target="_blank" rel="noopener">doi:10.5334/egems.225</a></div></li>
-        <li><div>Siepe BS, Bartoš F, Morris TP, Boulesteix AL, Heck DW, Pawel S. Simulation studies for methodological research in psychology: a standardized template for planning, preregistration, and reporting. <span class="ref-journal">Psychol Methods.</span> 2024. <a href="https://doi.org/10.1037/met0000695" target="_blank" rel="noopener">doi:10.1037/met0000695</a></div></li>
-        <li><div>Center for Open Science. Introducing the Simulation Studies Preregistration Template [Internet]. <a href="https://www.cos.io/blog/introducing-the-simulation-studies-preregistration-template" target="_blank" rel="noopener">cos.io</a></div></li>
-        <li><div>Morris TP, White IR, Crowther MJ. Using simulation studies to evaluate statistical methods. <span class="ref-journal">Stat Med.</span> 2019;38(11):2074–2102. <a href="https://doi.org/10.1002/sim.8086" target="_blank" rel="noopener">doi:10.1002/sim.8086</a></div></li>
-        <li><div>Kulldorff M. TreeScan: Software for the Tree-Based Scan Statistic [Internet]. <a href="https://www.treescan.org/" target="_blank" rel="noopener">treescan.org</a></div></li>
-        <li><div>Russo M, Wang SV. An open-source implementation of tree-based scan statistics. <span class="ref-journal">Pharmacoepidemiol Drug Saf.</span> 2024;33(3):e5765. <a href="https://doi.org/10.1002/pds.5765" target="_blank" rel="noopener">doi:10.1002/pds.5765</a></div></li>
-        <li><div>Kinsner-Ovaskainen A, Perraud A, Barisic I, Bergman JE, Game E. EUROCAT Guide 1.5: Instructions for the Registration of Congenital Anomalies. Updated version. Brussels: European Commission; 2025.</div></li>
-        <li><div>Wettermark B, Zoëga H, Furu K, Korhonen M, Hallas J, Nørgaard M, et al. The Nordic prescription databases as a resource for pharmacoepidemiological research: a literature review. <span class="ref-journal">Pharmacoepidemiol Drug Saf.</span> 2013;22(7):691–699. <a href="https://doi.org/10.1002/pds.3457" target="_blank" rel="noopener">doi:10.1002/pds.3457</a></div></li>
-        <li><div>Wettermark B, Hammar N, Fored CM, Leimanis A, Otterblad Olausson P, Bergman U, et al. The new Swedish Prescribed Drug Register: opportunities for pharmacoepidemiological research and experience from the first six months. <span class="ref-journal">Pharmacoepidemiol Drug Saf.</span> 2007;16(7):726–735. <a href="https://doi.org/10.1002/pds.1294" target="_blank" rel="noopener">doi:10.1002/pds.1294</a></div></li>
-        <li><div>Cnattingius S, Källén K, Sandström A, Rydberg H, Månsson H, Stephansson O, et al. The Swedish medical birth register during five decades: documentation of the content and quality of the register. <span class="ref-journal">Eur J Epidemiol.</span> 2023;38(1):109–120.</div></li>
-        <li><div>Laugesen K, Ludvigsson JF, Schmidt M, Gissler M, Valdimarsdottir UA, Lunde A, et al. Nordic health registry-based research: a review of health care systems and key registries. <span class="ref-journal">Clin Epidemiol.</span> 2021;13:533–554. <a href="https://doi.org/10.2147/CLEP.S314959" target="_blank" rel="noopener">doi:10.2147/CLEP.S314959</a></div></li>
-        <li><div>Brooke HL, Talbäck M, Hörnblad J, Johansson LA, Ludvigsson JF, Druid H, et al. The Swedish cause of death register. <span class="ref-journal">Eur J Epidemiol.</span> 2017;32(9):765–773. <a href="https://doi.org/10.1007/s10654-017-0316-1" target="_blank" rel="noopener">doi:10.1007/s10654-017-0316-1</a></div></li>
-      </ol>
     </div>
   </section>
 
@@ -603,15 +515,19 @@
   <section id="contact">
     <div class="container">
       <h2>Contact</h2>
-      <p>Questions about this work? Reach out to the corresponding author:</p>
+      <p>Questions or feedback? Reach out to us:</p>
       <div class="contact-grid">
         <div class="contact-item">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          <a href="mailto:stamatia.tsampa@ki.se">stamatia.tsampa@ki.se</a>
+          <a href="mailto:your@email.edu">your@email.edu</a>
         </div>
         <div class="contact-item">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.03c-3.34.73-4.03-1.61-4.03-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
           <a href="https://github.com/6tamattia/SAMMLA" target="_blank" rel="noopener">github.com/6tamattia/SAMMLA</a>
+        </div>
+        <div class="contact-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <a href="https://your-lab-website.edu" target="_blank" rel="noopener">Lab Website</a>
         </div>
       </div>
     </div>
@@ -620,7 +536,7 @@
   <!-- ── Footer ──────────────────────────────────────── -->
   <footer>
     <div class="container">
-      <p>© 2026 Tsampá et al. · Centre for Pharmacoepidemiology, Karolinska Institutet · <a href="https://github.com/6tamattia/SAMMLA">View source</a></p>
+      <p>© 2025 Your Lab · Built for GitHub Pages · <a href="https://github.com/6tamattia/SAMMLA">View source</a></p>
     </div>
   </footer>
 
