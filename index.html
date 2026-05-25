@@ -354,6 +354,36 @@
       color: var(--text-muted);
     }
 
+    /* ── References ─────────────────────────────────── */
+    .references-list {
+      list-style: none;
+      padding: 0;
+      counter-reset: ref-counter;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+    .references-list li {
+      counter-increment: ref-counter;
+      display: grid;
+      grid-template-columns: 1.75rem 1fr;
+      gap: 0.25rem;
+      font-size: 0.875rem;
+      line-height: 1.65;
+      color: #374151;
+    }
+    .references-list li::before {
+      content: counter(ref-counter) ".";
+      font-weight: 600;
+      color: var(--text-muted);
+      padding-top: 0.05em;
+    }
+    .references-list a {
+      color: var(--accent);
+      word-break: break-all;
+    }
+    .ref-journal { font-style: italic; }
+
     /* ── Responsive tweaks ──────────────────────────── */
     @media (max-width: 600px) {
       section { padding: 2.5rem 0; }
@@ -373,6 +403,7 @@
       <a href="#code">Code</a>
       <a href="#figures">Figures</a>
       <a href="#citation">Cite</a>
+      <a href="#references">References</a>
       <a href="#contact">Contact</a>
     </nav>
   </div>
@@ -526,6 +557,40 @@
   howpublished = {Poster presented at NordicEpi \& NorPEN Conference 2026}
 }</pre>
       </div>
+    </div>
+  </section>
+
+  <!-- ── References ────────────────────────────────────── -->
+  <section id="references">
+    <div class="container">
+      <h2>References</h2>
+      <ol class="references-list">
+        <li><div>Bergman JEH, Perraud A, Barišić I, Kinsner-Ovaskainen A, Morris JK, Tucker D, et al. Updated EUROCAT guidelines for classification of cases with congenital anomalies. <span class="ref-journal">Birth Defects Res.</span> 2024;116(2):e2314. <a href="https://doi.org/10.1002/bdr2.2314" target="_blank" rel="noopener">doi:10.1002/bdr2.2314</a></div></li>
+        <li><div>Byrne JJ, Saucedo AM, Spong CY. Task force on research specific to pregnant and lactating women. <span class="ref-journal">Semin Perinatol.</span> 2020;44(3):151226. <a href="https://doi.org/10.1016/j.semperi.2020.151226" target="_blank" rel="noopener">doi:10.1016/j.semperi.2020.151226</a></div></li>
+        <li><div>Thurin NH, Pajouheshnia R, Roberto G, et al. From Inception to ConcePTION: genesis of a network to support better monitoring and communication of medication safety during pregnancy and breastfeeding. <span class="ref-journal">Clin Pharmacol Ther.</span> 2022;111(1):321–331. <a href="https://doi.org/10.1002/cpt.2476" target="_blank" rel="noopener">doi:10.1002/cpt.2476</a></div></li>
+        <li><div>US Food and Drug Administration. Postapproval Pregnancy Safety Studies: Guidance for Industry. FDA; [n.d.]. <a href="https://www.fda.gov/regulatory-information/search-fda-guidance-documents/postapproval-pregnancy-safety-studies-guidance-industry" target="_blank" rel="noopener">fda.gov</a></div></li>
+        <li><div>Gelperin K, Hammad H, Leishear K, Bird ST, Taylor L, Hampp C, et al. A systematic review of pregnancy exposure registries: examination of protocol-specified pregnancy outcomes, target sample size, and comparator selection. <span class="ref-journal">Pharmacoepidemiol Drug Saf.</span> 2017;26(2):208–214. <a href="https://doi.org/10.1002/pds.4150" target="_blank" rel="noopener">doi:10.1002/pds.4150</a></div></li>
+        <li><div>Bird ST, Gelperin K, Taylor L, Sahin L, Hammad H, Andrade SE, et al. Enrollment and retention in 34 United States pregnancy registries contrasted with the manufacturer's capture of spontaneous reports for exposed pregnancies. <span class="ref-journal">Drug Saf.</span> 2018;41(1):87–94.</div></li>
+        <li><div>Systematic overview of data sources for drug safety in pregnancy research. [Report; author and publisher details pending]</div></li>
+        <li><div>Kulldorff M, Dashevsky I, Avery TR, Chan AK, Davis RL, Graham D, et al. Drug safety data mining with a tree-based scan statistic. <span class="ref-journal">Pharmacoepidemiol Drug Saf.</span> 2013;22(5):517–523. <a href="https://doi.org/10.1002/pds.3423" target="_blank" rel="noopener">doi:10.1002/pds.3423</a></div></li>
+        <li><div>Kulldorff M, Fang Z, Walsh SJ. A tree-based scan statistic for database disease surveillance. <span class="ref-journal">Biometrics.</span> 2003;59(2):323–331. <a href="https://doi.org/10.1111/1541-0420.00039" target="_blank" rel="noopener">doi:10.1111/1541-0420.00039</a></div></li>
+        <li><div>Huybrechts KF, Kulldorff M, Hernández-Díaz S, Bateman BT, Zhu Y, Mogun H, et al. Active surveillance of the safety of medications used during pregnancy. <span class="ref-journal">Am J Epidemiol.</span> 2021;190(6):1159–1168. <a href="https://doi.org/10.1093/aje/kwaa288" target="_blank" rel="noopener">doi:10.1093/aje/kwaa288</a></div></li>
+        <li><div>Suarez EA, Nguyen M, Zhang D, Zhao Y, Stojanovic D, Munoz M, et al. Monitoring drug safety in pregnancy with scan statistics: a comparison of two study designs. <span class="ref-journal">Epidemiology.</span> 2023;34(1):90–98. <a href="https://doi.org/10.1097/EDE.0000000000001561" target="_blank" rel="noopener">doi:10.1097/EDE.0000000000001561</a></div></li>
+        <li><div>Suarez EA, Nguyen M, Zhang D, Zhao Y, Stojanovic D, Munoz M, et al. Novel methods for pregnancy drug safety surveillance in the FDA Sentinel System. <span class="ref-journal">Pharmacoepidemiol Drug Saf.</span> 2023;32(2):126–136. <a href="https://doi.org/10.1002/pds.5512" target="_blank" rel="noopener">doi:10.1002/pds.5512</a></div></li>
+        <li><div>Thai TN, Winterstein AG, Suarez EA, He J, Zhao Y, Zhang D, et al. Triple challenges—small sample size in both exposure and control groups to scan rare maternal outcomes in a signal identification approach: a simulation study. <span class="ref-journal">Am J Epidemiol.</span> 2024;193(12):1805–1813.</div></li>
+        <li><div>Maro JC, Nguyen MD, Dashevsky I, Baker MA, Kulldorff M. Statistical power for postlicensure medical product safety data mining. <span class="ref-journal">EGEMS.</span> 2017;5(1):6. <a href="https://doi.org/10.5334/egems.225" target="_blank" rel="noopener">doi:10.5334/egems.225</a></div></li>
+        <li><div>Siepe BS, Bartoš F, Morris TP, Boulesteix AL, Heck DW, Pawel S. Simulation studies for methodological research in psychology: a standardized template for planning, preregistration, and reporting. <span class="ref-journal">Psychol Methods.</span> 2024. <a href="https://doi.org/10.1037/met0000695" target="_blank" rel="noopener">doi:10.1037/met0000695</a></div></li>
+        <li><div>Center for Open Science. Introducing the Simulation Studies Preregistration Template [Internet]. <a href="https://www.cos.io/blog/introducing-the-simulation-studies-preregistration-template" target="_blank" rel="noopener">cos.io</a></div></li>
+        <li><div>Morris TP, White IR, Crowther MJ. Using simulation studies to evaluate statistical methods. <span class="ref-journal">Stat Med.</span> 2019;38(11):2074–2102. <a href="https://doi.org/10.1002/sim.8086" target="_blank" rel="noopener">doi:10.1002/sim.8086</a></div></li>
+        <li><div>Kulldorff M. TreeScan: Software for the Tree-Based Scan Statistic [Internet]. <a href="https://www.treescan.org/" target="_blank" rel="noopener">treescan.org</a></div></li>
+        <li><div>Russo M, Wang SV. An open-source implementation of tree-based scan statistics. <span class="ref-journal">Pharmacoepidemiol Drug Saf.</span> 2024;33(3):e5765. <a href="https://doi.org/10.1002/pds.5765" target="_blank" rel="noopener">doi:10.1002/pds.5765</a></div></li>
+        <li><div>Kinsner-Ovaskainen A, Perraud A, Barisic I, Bergman JE, Game E. EUROCAT Guide 1.5: Instructions for the Registration of Congenital Anomalies. Updated version. Brussels: European Commission; 2025.</div></li>
+        <li><div>Wettermark B, Zoëga H, Furu K, Korhonen M, Hallas J, Nørgaard M, et al. The Nordic prescription databases as a resource for pharmacoepidemiological research: a literature review. <span class="ref-journal">Pharmacoepidemiol Drug Saf.</span> 2013;22(7):691–699. <a href="https://doi.org/10.1002/pds.3457" target="_blank" rel="noopener">doi:10.1002/pds.3457</a></div></li>
+        <li><div>Wettermark B, Hammar N, Fored CM, Leimanis A, Otterblad Olausson P, Bergman U, et al. The new Swedish Prescribed Drug Register: opportunities for pharmacoepidemiological research and experience from the first six months. <span class="ref-journal">Pharmacoepidemiol Drug Saf.</span> 2007;16(7):726–735. <a href="https://doi.org/10.1002/pds.1294" target="_blank" rel="noopener">doi:10.1002/pds.1294</a></div></li>
+        <li><div>Cnattingius S, Källén K, Sandström A, Rydberg H, Månsson H, Stephansson O, et al. The Swedish medical birth register during five decades: documentation of the content and quality of the register. <span class="ref-journal">Eur J Epidemiol.</span> 2023;38(1):109–120.</div></li>
+        <li><div>Laugesen K, Ludvigsson JF, Schmidt M, Gissler M, Valdimarsdottir UA, Lunde A, et al. Nordic health registry-based research: a review of health care systems and key registries. <span class="ref-journal">Clin Epidemiol.</span> 2021;13:533–554. <a href="https://doi.org/10.2147/CLEP.S314959" target="_blank" rel="noopener">doi:10.2147/CLEP.S314959</a></div></li>
+        <li><div>Brooke HL, Talbäck M, Hörnblad J, Johansson LA, Ludvigsson JF, Druid H, et al. The Swedish cause of death register. <span class="ref-journal">Eur J Epidemiol.</span> 2017;32(9):765–773. <a href="https://doi.org/10.1007/s10654-017-0316-1" target="_blank" rel="noopener">doi:10.1007/s10654-017-0316-1</a></div></li>
+      </ol>
     </div>
   </section>
 
