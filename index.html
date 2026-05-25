@@ -3,9 +3,556 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SAMMLA</title>
+  <title>SAMMLA — Project Page</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --accent:       #1d4ed8;
+      --accent-light: #dbeafe;
+      --accent-hover: #1e40af;
+      --text:         #111827;
+      --text-muted:   #6b7280;
+      --border:       #e5e7eb;
+      --bg:           #ffffff;
+      --bg-subtle:    #f9fafb;
+      --code-bg:      #1e293b;
+      --code-text:    #e2e8f0;
+      --radius:       6px;
+      --max-w:        780px;
+      --max-w-wide:   1100px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--text);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Layout ─────────────────────────────────────── */
+    .container {
+      width: 100%;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+    .container--wide {
+      max-width: var(--max-w-wide);
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    section { padding: 3.5rem 0; }
+    section + section { border-top: 1px solid var(--border); }
+
+    /* ── Typography ─────────────────────────────────── */
+    h1 {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: clamp(1.75rem, 5vw, 2.6rem);
+      font-weight: 600;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+    h2 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+    }
+    p { margin-bottom: 1rem; }
+    p:last-child { margin-bottom: 0; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Nav strip ──────────────────────────────────── */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 0;
+    }
+    .topbar nav {
+      display: flex;
+      gap: 1.5rem;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 1.25rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    .topbar nav a {
+      color: var(--text-muted);
+      transition: color 0.15s;
+    }
+    .topbar nav a:hover { color: var(--accent); text-decoration: none; }
+
+    /* ── Hero ───────────────────────────────────────── */
+    #hero {
+      padding: 4rem 0 3rem;
+      border-top: 3px solid var(--accent);
+    }
+    .venue-tag {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-light);
+      padding: 0.25rem 0.65rem;
+      border-radius: 99px;
+      margin-bottom: 1rem;
+    }
+    .hero-title { margin-bottom: 1.25rem; }
+    .authors {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 0.3rem;
+    }
+    .authors a {
+      color: var(--text);
+      font-weight: 500;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.15s;
+    }
+    .authors a:hover { border-color: var(--accent); text-decoration: none; }
+    .affiliation {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+    .tagline {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 1.125rem;
+      font-style: italic;
+      color: #374151;
+      margin-bottom: 2rem;
+      padding-left: 1rem;
+      border-left: 3px solid var(--accent);
+    }
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    /* ── Buttons ────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.55rem 1.1rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border-radius: var(--radius);
+      border: 1.5px solid transparent;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.1s;
+      text-decoration: none;
+    }
+    .btn:hover { transform: translateY(-1px); text-decoration: none; }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    .btn-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+    .btn-outline {
+      background: transparent;
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+    .btn-outline:hover { background: var(--accent-light); }
+    .btn-ghost {
+      background: var(--bg-subtle);
+      color: var(--text);
+      border-color: var(--border);
+    }
+    .btn-ghost:hover { background: #f3f4f6; }
+
+    /* ── Abstract ───────────────────────────────────── */
+    #abstract p {
+      font-size: 1.025rem;
+      line-height: 1.75;
+      color: #374151;
+    }
+
+    /* ── Paper ──────────────────────────────────────── */
+    .paper-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.25rem;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      transition: box-shadow 0.2s;
+    }
+    .paper-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+    .paper-icon {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      background: var(--accent-light);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+    }
+    .paper-meta { flex: 1; }
+    .paper-meta h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    .paper-meta p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-bottom: 0.85rem;
+    }
+
+    /* ── Code ───────────────────────────────────────── */
+    .clone-block {
+      margin-top: 1.25rem;
+      background: var(--code-bg);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .clone-block-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 1rem;
+      background: rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .clone-block-header span {
+      font-size: 0.75rem;
+      color: #94a3b8;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .clone-block code {
+      display: block;
+      padding: 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--code-text);
+      white-space: pre;
+      overflow-x: auto;
+    }
+
+    /* ── Figures ────────────────────────────────────── */
+    .figures-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .figure-item { display: flex; flex-direction: column; gap: 0.65rem; }
+    .figure-item img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg-subtle);
+      display: block;
+    }
+    .figure-caption {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .figure-caption strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* ── Citation ───────────────────────────────────── */
+    .citation-block {
+      position: relative;
+      background: var(--code-bg);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .citation-block pre {
+      padding: 1.25rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      line-height: 1.7;
+      color: var(--code-text);
+      overflow-x: auto;
+      white-space: pre;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #94a3b8;
+      font-size: 0.75rem;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      padding: 0.3rem 0.7rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .copy-btn:hover { background: rgba(255,255,255,0.18); color: #e2e8f0; }
+    .copy-btn.copied { background: #166534; color: #86efac; border-color: #166534; }
+
+    /* ── Contact ────────────────────────────────────── */
+    .contact-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    .contact-item a { color: var(--accent); font-weight: 500; }
+
+    /* ── Footer ─────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 0;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive tweaks ──────────────────────────── */
+    @media (max-width: 600px) {
+      section { padding: 2.5rem 0; }
+      #hero { padding: 2.5rem 0 2rem; }
+      .figures-grid { grid-template-columns: 1fr; }
+      .paper-card { flex-direction: column; }
+      .topbar nav { gap: 1rem; overflow-x: auto; white-space: nowrap; }
+    }
+  </style>
 </head>
 <body>
-  <p>Coming soon.</p>
+
+  <!-- ── Sticky nav ──────────────────────────────────── -->
+  <div class="topbar">
+    <nav>
+      <a href="#abstract">Abstract</a>
+      <a href="#paper">Paper</a>
+      <a href="#code">Code</a>
+      <a href="#figures">Figures</a>
+      <a href="#citation">Cite</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+
+  <!-- ── Hero ───────────────────────────────────────── -->
+  <section id="hero">
+    <div class="container">
+      <span class="venue-tag">Conference / Journal Name · 2025</span>
+      <h1 class="hero-title">SAMMLA: A Title That Describes Your Method</h1>
+      <p class="authors">
+        <a href="#">Author One</a><sup>1</sup>,
+        <a href="#">Author Two</a><sup>1</sup>,
+        <a href="#">Author Three</a><sup>2</sup>,
+        <a href="#">Senior Author</a><sup>1</sup>
+      </p>
+      <p class="affiliation">
+        <sup>1</sup> Your University &nbsp;·&nbsp; <sup>2</sup> Collaborating Institution
+      </p>
+      <p class="tagline">
+        One sentence that captures the essence of the contribution.
+      </p>
+      <div class="hero-buttons">
+        <a href="papers/paper.pdf" class="btn btn-primary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Paper
+        </a>
+        <a href="https://github.com/6tamattia/SAMMLA/tree/main/code" class="btn btn-outline">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.03c-3.34.73-4.03-1.61-4.03-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          Code
+        </a>
+        <a href="https://arxiv.org/abs/XXXX.XXXXX" class="btn btn-ghost">
+          arXiv
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Abstract ───────────────────────────────────── -->
+  <section id="abstract">
+    <div class="container">
+      <h2>Abstract</h2>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+      </p>
+      <p>
+        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── Paper ──────────────────────────────────────── -->
+  <section id="paper">
+    <div class="container">
+      <h2>Paper</h2>
+      <div class="paper-card">
+        <div class="paper-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </div>
+        <div class="paper-meta">
+          <h3>SAMMLA: A Title That Describes Your Method</h3>
+          <p>Author One, Author Two, Author Three, Senior Author · Conference Name 2025</p>
+          <div style="display:flex;gap:0.6rem;flex-wrap:wrap;">
+            <a href="papers/paper.pdf" class="btn btn-primary" style="font-size:0.85rem;padding:0.4rem 0.9rem;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download PDF
+            </a>
+            <a href="https://arxiv.org/abs/XXXX.XXXXX" class="btn btn-ghost" style="font-size:0.85rem;padding:0.4rem 0.9rem;">arXiv preprint</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Code ───────────────────────────────────────── -->
+  <section id="code">
+    <div class="container">
+      <h2>Code</h2>
+      <p>The full implementation is available on GitHub. We provide training scripts, pre-trained weights, and evaluation code.</p>
+      <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-bottom:1.25rem;">
+        <a href="https://github.com/6tamattia/SAMMLA/tree/main/code" class="btn btn-outline">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.03c-3.34.73-4.03-1.61-4.03-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          Browse on GitHub
+        </a>
+      </div>
+      <div class="clone-block">
+        <div class="clone-block-header">
+          <span>bash</span>
+          <button class="copy-btn" data-copy="git clone https://github.com/6tamattia/SAMMLA.git">Copy</button>
+        </div>
+        <code>git clone https://github.com/6tamattia/SAMMLA.git</code>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Figures ─────────────────────────────────────── -->
+  <section id="figures">
+    <div class="container--wide">
+      <div class="container" style="padding:0;">
+        <h2>Figures</h2>
+        <p style="color:var(--text-muted);font-size:0.9rem;">Representative results — replace with your actual figures.</p>
+      </div>
+      <div class="figures-grid">
+        <figure class="figure-item">
+          <img src="https://placehold.co/800x600/e2e8f0/94a3b8?text=Figure+1" alt="Figure 1 placeholder">
+          <figcaption class="figure-caption"><strong>Figure 1.</strong> Caption describing the first figure. Explain what the reader should observe and why it matters.</figcaption>
+        </figure>
+        <figure class="figure-item">
+          <img src="https://placehold.co/800x600/e2e8f0/94a3b8?text=Figure+2" alt="Figure 2 placeholder">
+          <figcaption class="figure-caption"><strong>Figure 2.</strong> Caption for the second figure. Highlight the key takeaway from this visualization.</figcaption>
+        </figure>
+        <figure class="figure-item">
+          <img src="https://placehold.co/800x600/e2e8f0/94a3b8?text=Figure+3" alt="Figure 3 placeholder">
+          <figcaption class="figure-caption"><strong>Figure 3.</strong> Caption for the third figure. Describe the experimental setup or result being shown.</figcaption>
+        </figure>
+        <figure class="figure-item">
+          <img src="https://placehold.co/800x600/e2e8f0/94a3b8?text=Figure+4" alt="Figure 4 placeholder">
+          <figcaption class="figure-caption"><strong>Figure 4.</strong> Caption for the fourth figure. Summarize the conclusion a reader should draw.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Citation ────────────────────────────────────── -->
+  <section id="citation">
+    <div class="container">
+      <h2>Citation</h2>
+      <p>If you use this work, please cite:</p>
+      <div class="citation-block">
+        <button class="copy-btn" id="cite-copy-btn" data-copy="@inproceedings{sammla2025,
+  title     = {SAMMLA: A Title That Describes Your Method},
+  author    = {One, Author and Two, Author and Three, Author and Author, Senior},
+  booktitle = {Proceedings of the Conference Name (CONF)},
+  year      = {2025},
+  url       = {https://arxiv.org/abs/XXXX.XXXXX}
+}">Copy BibTeX</button>
+        <pre id="bibtex">@inproceedings{sammla2025,
+  title     = {SAMMLA: A Title That Describes Your Method},
+  author    = {One, Author and Two, Author and Three, Author and Author, Senior},
+  booktitle = {Proceedings of the Conference Name (CONF)},
+  year      = {2025},
+  url       = {https://arxiv.org/abs/XXXX.XXXXX}
+}</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Contact ─────────────────────────────────────── -->
+  <section id="contact">
+    <div class="container">
+      <h2>Contact</h2>
+      <p>Questions or feedback? Reach out to us:</p>
+      <div class="contact-grid">
+        <div class="contact-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <a href="mailto:your@email.edu">your@email.edu</a>
+        </div>
+        <div class="contact-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.03c-3.34.73-4.03-1.61-4.03-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          <a href="https://github.com/6tamattia/SAMMLA" target="_blank" rel="noopener">github.com/6tamattia/SAMMLA</a>
+        </div>
+        <div class="contact-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <a href="https://your-lab-website.edu" target="_blank" rel="noopener">Lab Website</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ──────────────────────────────────────── -->
+  <footer>
+    <div class="container">
+      <p>© 2025 Your Lab · Built for GitHub Pages · <a href="https://github.com/6tamattia/SAMMLA">View source</a></p>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const text = btn.dataset.copy;
+        navigator.clipboard.writeText(text).then(() => {
+          const original = btn.textContent;
+          btn.textContent = 'Copied!';
+          btn.classList.add('copied');
+          setTimeout(() => {
+            btn.textContent = original;
+            btn.classList.remove('copied');
+          }, 2000);
+        });
+      });
+    });
+  </script>
+
 </body>
 </html>
