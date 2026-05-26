@@ -391,12 +391,18 @@
       border-radius: 8px;
       overflow: hidden;
       border: 1px solid var(--border);
+      touch-action: none;   /* let Three.js own touch events inside the iframe */
     }
     .tree-frame-wrap iframe {
       display: block;
       width: 100%;
       height: min(72vh, 660px);
       border: none;
+    }
+    @media (max-width: 600px) {
+      .tree-frame-wrap iframe {
+        height: 75vmax;   /* taller relative to viewport on phones */
+      }
     }
 
     /* ── Responsive tweaks ──────────────────────────── */
@@ -531,7 +537,7 @@
       <h2>Outcome Tree</h2>
       <p style="color:var(--text-muted);font-size:0.9rem;">
         EUROCAT-based hierarchical outcome tree used in the TBSS analysis (529 nodes).
-        <strong>Drag</strong> to rotate &nbsp;·&nbsp; <strong>Scroll</strong> to zoom &nbsp;·&nbsp; <strong>Hover</strong> a node to identify it.
+        <strong>Drag</strong> to rotate &nbsp;·&nbsp; <strong>Scroll / pinch</strong> to zoom &nbsp;·&nbsp; <strong>Hover / tap</strong> a node to identify it.
       </p>
     </div>
     <div class="tree-frame-wrap">
