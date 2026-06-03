@@ -345,6 +345,52 @@
     }
     .contact-item a { color: var(--accent); font-weight: 500; }
 
+    /* ── Connect form ───────────────────────────────── */
+    .connect-box {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-top: 1.5rem;
+    }
+    .connect-form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
+      .connect-box { padding: 1.25rem; }
+    }
+    .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+    .form-group label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .form-group input,
+    .form-group textarea {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 0.95rem;
+      color: var(--text);
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.6rem 0.85rem;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      outline: none;
+      width: 100%;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(29,78,216,0.1);
+    }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-submit-row { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+    #connect-status { font-size: 0.88rem; font-weight: 500; display: none; }
+    #connect-status.success { color: #166534; display: inline; }
+    #connect-status.error   { color: #991b1b; display: inline; }
+
     /* ── Footer ─────────────────────────────────────── */
     footer {
       border-top: 1px solid var(--border);
@@ -423,8 +469,7 @@
       <a href="#paper">Paper</a>
       <a href="#code">Code</a>
       <a href="#figures">Figures</a>
-      <a href="#citation">Cite</a>
-      <a href="#references">References</a>
+<a href="#references">References</a>
       <a href="#contact">Contact</a>
     </nav>
   </div>
@@ -497,14 +542,12 @@
         <div class="paper-meta">
           <h3>Statistical power of Tree-Based Scan Statistics (TBSS) for the surveillance of pregnancy drug safety in Swedish health registers</h3>
           <p>Tsampá S., Eriksson J., Netterström-Wedin F., Hägg D., Axfors C. · NordicEpi &amp; NorPEN Conference 2026</p>
-          <!-- PAPER LINK DISABLED — uncomment when PDF is ready
           <div style="display:flex;gap:0.6rem;flex-wrap:wrap;">
-            <a href="papers/paper.pdf" class="btn btn-primary" style="font-size:0.85rem;padding:0.4rem 0.9rem;">
+            <a href="assets/power_simulation_NOFE_2026_Stamatia_Tsampa.pdf" target="_blank" class="btn btn-primary" style="font-size:0.85rem;padding:0.4rem 0.9rem;">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              Download PDF
+              View Poster PDF
             </a>
           </div>
-          -->
         </div>
       </div>
     </div>
@@ -549,33 +592,7 @@
     </div>
   </section>
 
-  <!-- ── Citation ────────────────────────────────────── -->
-  <section id="citation">
-    <div class="container">
-      <h2>Citation</h2>
-      <p>If you reference this work, please cite:</p>
-      <div class="citation-block">
-        <button class="copy-btn" data-copy="@misc{tsampa2026tbss,
-  title        = {Statistical power of Tree-Based Scan Statistics ({TBSS}) for the
-                  surveillance of pregnancy drug safety in {S}wedish health registers},
-  author       = {Tsamp{\'a}, S. and Eriksson, J. and Netterstr{\"o}m-Wedin, F.
-                  and H{\"a}gg, D. and Axfors, C.},
-  year         = {2026},
-  howpublished = {Poster presented at NordicEpi \& NorPEN Conference 2026}
-}">Copy BibTeX</button>
-        <pre>@misc{tsampa2026tbss,
-  title        = {Statistical power of Tree-Based Scan Statistics ({TBSS}) for the
-                  surveillance of pregnancy drug safety in {S}wedish health registers},
-  author       = {Tsamp{\'a}, S. and Eriksson, J. and Netterstr{\"o}m-Wedin, F.
-                  and H{\"a}gg, D. and Axfors, C.},
-  year         = {2026},
-  howpublished = {Poster presented at NordicEpi \& NorPEN Conference 2026}
-}</pre>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── References ────────────────────────────────────── -->
+<!-- ── References ────────────────────────────────────── -->
   <section id="references">
     <div class="container">
       <h2>References</h2>
@@ -613,7 +630,7 @@
   <section id="contact">
     <div class="container">
       <h2>Contact</h2>
-      <p>Questions about this work? Reach out to the corresponding author:</p>
+      <p>Questions about this work? Reach out to talk more and work together on methods in perinatal pharmacoepidemiology, medication wide/outcome-wide study of associations and open science! Drop a message in the box below!</p>
       <div class="contact-grid">
         <div class="contact-item">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
@@ -628,6 +645,30 @@
           <a href="https://www.linkedin.com/in/stamatiatsampa" target="_blank" rel="noopener">linkedin.com/in/stamatiatsampa</a>
         </div>
       </div>
+
+      <!-- Message box -->
+      <div class="connect-box">
+        <form class="connect-form" id="connect-form" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="cf-email">Your email <span style="color:#dc2626">*</span></label>
+              <input type="email" id="cf-email" name="email" placeholder="you@institution.edu" required>
+            </div>
+            <div class="form-group">
+              <label for="cf-field">Field of interest / work <span style="color:#dc2626">*</span></label>
+              <input type="text" id="cf-field" name="field" placeholder="e.g. pharmacoepidemiology, obstetrics…" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="cf-message">Message</label>
+            <textarea id="cf-message" name="message" placeholder="Tell me about yourself or what you'd like to explore together…"></textarea>
+          </div>
+          <div class="form-submit-row">
+            <button type="submit" class="btn btn-primary">Send message</button>
+            <span id="connect-status"></span>
+          </div>
+        </form>
+      </div>
     </div>
   </section>
 
@@ -639,6 +680,27 @@
   </footer>
 
   <script>
+    document.getElementById('connect-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email   = document.getElementById('cf-email').value.trim();
+      const field   = document.getElementById('cf-field').value.trim();
+      const message = document.getElementById('cf-message').value.trim();
+      const status  = document.getElementById('connect-status');
+
+      if (!email || !field) {
+        status.textContent = 'Please fill in your email and field of interest.';
+        status.className = 'error';
+        return;
+      }
+
+      const body = `From: ${email}\nField of interest/work: ${field}\n\n${message}`;
+      const mailto = `mailto:stamatia.tsampa@ki.se?subject=${encodeURIComponent('Connection request – ' + field)}&body=${encodeURIComponent(body)}`;
+      window.location.href = mailto;
+
+      status.textContent = 'Your email client should open — thank you for reaching out!';
+      status.className = 'success';
+    });
+
     document.querySelectorAll('.copy-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const text = btn.dataset.copy;
